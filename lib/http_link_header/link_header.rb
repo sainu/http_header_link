@@ -27,19 +27,18 @@ module HttpLinkHeader
     # @param [Array<HttpLinkHeader::Link>] links
     def initialize(*links)
       _links = links.flatten
-      @links = _links
       super(_links.empty? ? [] : _links)
     end
 
     # @return [String]
     def to_s
-      links.flatten.compact.map(&:to_s).join(', ')
+      self.flatten.compact.map(&:to_s).join(', ')
     end
 
     # @param [Symbol] attribute
     # @param [String] value
     def find_by(attribute, value)
-      links.find { |link| link.public_send(attribute) == value }
+      self.find { |link| link.public_send(attribute) == value }
     end
 
     private
