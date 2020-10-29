@@ -123,5 +123,32 @@ RSpec.describe HttpLinkHeader::LinkHeader do
         end
       end
     end
+
+    describe '#find_by' do
+      let(:link_header) do
+        described_class.new(
+          expected_link,
+          HttpLinkHeader::Link.new('/dummy', rel: 'dummy')
+        )
+      end
+
+      subject { link_header.find_by(attribute, value) }
+
+      parameterized do
+        where :attribute, :value, :expected_link, size: 5 do
+          [
+            [:rel, 'next', HttpLinkHeader::Link.new('/', rel: 'next')],
+            [:hreflang, 'ja', HttpLinkHeader::Link.new('/', hreflang: 'ja')],
+            [:title, 'TITLE', HttpLinkHeader::Link.new('/', title: 'TITLE')],
+            [:media, '(min-width: 801px)', HttpLinkHeader::Link.new('/', media: '(min-width: 801px)')],
+            [:type, 'text/plain', HttpLinkHeader::Link.new('/', type: 'text/plain')],
+          ]
+        end
+
+        with_them do
+          it { is_expected.to eq(expected_link) }
+        end
+      end
+    end
   end
 end

@@ -36,6 +36,11 @@ module HttpLinkHeader
       links.flatten.compact.map(&:to_s).join(', ')
     end
 
+    # @param [Symbol] attribute
+    # @param [String] value
+    def find_by(attribute, value)
+      links.find { |link| link.public_send(attribute) == value }
+    end
 
     private
 
