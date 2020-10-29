@@ -43,10 +43,14 @@ RSpec.describe HttpLinkHeader::LinkHeader do
         end
       end
     end
+  end
 
-    describe '.generate' do
+  describe 'Instance methods' do
+    describe '#to_s' do
       context '引数に渡す時に展開しない時' do
-        subject { described_class.generate(*args) }
+        subject { instance.to_s }
+
+        let(:instance) { described_class.new(*args) }
 
         parameterized do
           where :args, :expected_value, size: 5 do
@@ -80,7 +84,7 @@ RSpec.describe HttpLinkHeader::LinkHeader do
               ],
               [
                 nil,
-                nil
+                ''
               ]
             ]
           end
@@ -92,14 +96,16 @@ RSpec.describe HttpLinkHeader::LinkHeader do
       end
 
       context '引数をArray<LinkHeader>で展開した場合' do
-        subject { described_class.generate(*args) }
+        subject { instance.to_s }
+
+        let(:instance) { described_class.new(*args) }
 
         parameterized do
           where :args, :expected_value, size: 2 do
             [
               [
                 [nil],
-                nil
+                ''
               ],
               [
                 [

@@ -22,19 +22,17 @@ module HttpLinkHeader
 
         new(links)
       end
-
-      # @param [Array<HttpLinkHeader::Link>] link_headers
-      # @return [String]
-      # @return [nil]
-      def generate(*link_headers)
-        result = link_headers.flatten.compact.map(&:to_s).join(', ')
-        result.empty? ? nil : result
-      end
     end
 
     # @param [Array<HttpLinkHeader::Link>] links
-    def initialize(links)
-      @links = links.empty? ? [] : links
+    def initialize(*links)
+      _links = links.flatten
+      @links = _links.empty? ? [] : _links
+    end
+
+    # @return [String]
+    def to_s
+      links.flatten.compact.map(&:to_s).join(', ')
     end
 
     def method_missing(name)
