@@ -22,6 +22,12 @@ module HttpLinkHeader
       str
     end
 
+    # @param [Symbol] name
+    # @return [String, nil]
+    def get_query(name)
+      query_hash[name.to_s]
+    end
+
     # @return [String, nil]
     def rel
       attributes[:rel]
@@ -45,6 +51,18 @@ module HttpLinkHeader
     # @return [String, nil]
     def type
       attributes[:type]
+    end
+
+    private
+
+    # @return [URI]
+    def uri
+      URI.parse(url)
+    end
+
+    # @return [Hash{ String => String }]
+    def query_hash
+      URI::decode_www_form(uri.query || '').to_h
     end
   end
 end

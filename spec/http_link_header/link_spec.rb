@@ -24,6 +24,26 @@ RSpec.describe HttpLinkHeader::Link do
       it { is_expected.to eq('</>; rel="previous"') }
     end
 
+    describe '#get_query' do
+      subject { instance.get_query(query_name) }
+
+      let(:instance) { described_class.new(url, rel: 'dummy') }
+
+      parameterized do
+        where :url, :query_name, :expected_value, size: 3 do
+          [
+            ['/', :page, nil],
+            ['/?page=1', :page, '1'],
+            ['/?dummy=1', :page, nil]
+          ]
+        end
+
+        with_them do
+          fit { is_expected.to eq(expected_value) }
+        end
+      end
+    end
+
     describe '#rel' do
       subject { instance.rel }
 
