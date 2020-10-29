@@ -31,8 +31,8 @@ module HttpLinkHeader
     end
 
     # @return [String]
-    def to_s
-      self.flatten.compact.map(&:to_s).join(', ')
+    def generate
+      self.flatten.compact.map(&:generate).join(', ')
     end
 
     # @param [Symbol] attribute

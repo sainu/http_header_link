@@ -46,9 +46,9 @@ RSpec.describe HttpLinkHeader::LinkHeader do
   end
 
   describe 'Instance methods' do
-    describe '#to_s' do
+    describe '#generate' do
       context '引数に渡す時に展開しない時' do
-        subject { instance.to_s }
+        subject { instance.generate }
 
         let(:instance) { described_class.new(*args) }
 
@@ -96,7 +96,7 @@ RSpec.describe HttpLinkHeader::LinkHeader do
       end
 
       context '引数をArray<LinkHeader>で展開した場合' do
-        subject { instance.to_s }
+        subject { instance.generate }
 
         let(:instance) { described_class.new(*args) }
 

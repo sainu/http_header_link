@@ -14,7 +14,7 @@ module HttpLinkHeader
     end
 
     # @return [String]
-    def to_s
+    def generate
       str = "<#{url}>"
       attributes.each do |name, value|
         str += %(; #{name}="#{value}")

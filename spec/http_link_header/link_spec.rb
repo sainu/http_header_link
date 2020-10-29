@@ -13,8 +13,8 @@ RSpec.describe HttpLinkHeader::Link do
       it { is_expected.to eq('/') }
     end
 
-    describe '#to_s' do
-      subject { instance.to_s }
+    describe '#generate' do
+      subject { instance.generate }
 
       let(:instance) { described_class.new(*args) }
       let(:args) do

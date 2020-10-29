@@ -27,7 +27,7 @@ link_header = HttpLinkHeader::LinkHeader.new(
   HttpLinkHeader::Link.new("/?page=1", rel: 'previous'),
   HttpLinkHeader::Link.new("/?page=3", rel: 'next')
 )
-link_header.to_s unless link_header.empty?
+link_header.generate
 => "</?page=3>; rel=\"previous\", </?page=1>; rel=\"next\""
 ```
 
