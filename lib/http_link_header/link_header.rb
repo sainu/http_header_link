@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module HttpLinkHeader
-  class LinkHeader
+  class LinkHeader < Array
     class << self
       # @param [String] target
       # @return [HttpLinkHeader::ParseResult]
@@ -27,7 +27,8 @@ module HttpLinkHeader
     # @param [Array<HttpLinkHeader::Link>] links
     def initialize(*links)
       _links = links.flatten
-      @links = _links.empty? ? [] : _links
+      @links = _links
+      super(_links.empty? ? [] : _links)
     end
 
     # @return [String]
@@ -35,9 +36,6 @@ module HttpLinkHeader
       links.flatten.compact.map(&:to_s).join(', ')
     end
 
-    def method_missing(name)
-      links.public_send(name)
-    end
 
     private
 
