@@ -36,7 +36,7 @@ RSpec.describe HttpLinkHeader::LinkHeader do
             result = subject
             expect(result.size).to eq(expected_value.size)
             result.each_with_index do |r, i|
-              expect(r.uri).to eq(expected_value[i].uri)
+              expect(r.url).to eq(expected_value[i].url)
               expect(r.attributes).to eq(expected_value[i].attributes)
             end
           end

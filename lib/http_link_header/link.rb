@@ -3,19 +3,19 @@
 module HttpLinkHeader
   class Link
     # @return [String]
-    attr_reader :uri
+    attr_reader :url
     attr_reader :attributes
 
-    # @param [String] uri
+    # @param [String] url
     # @param [Hash{ Symbol => String }] options
-    def initialize(uri, **options)
-      @uri = uri
+    def initialize(url, **options)
+      @url = url
       @attributes = options.slice(:rel, :title, :hreflang, :media, :type)
     end
 
     # @return [String]
     def to_s
-      str = "<#{uri}>"
+      str = "<#{url}>"
       attributes.each do |name, value|
         str += %(; #{name}="#{value}")
       end

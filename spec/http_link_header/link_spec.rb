@@ -2,8 +2,8 @@
 
 RSpec.describe HttpLinkHeader::Link do
   describe 'Instance methods' do
-    describe '#uri' do
-      subject { instance.uri }
+    describe '#url' do
+      subject { instance.url }
 
       let(:instance) { described_class.new(*args) }
       let(:args) do

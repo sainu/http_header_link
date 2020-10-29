@@ -9,7 +9,7 @@ module HttpLinkHeader
         parts = target.split(',')
         links = parts.map do |part|
           sections = part.split(';')
-          uri = sections.shift[/<(.*)>/, 1]
+          url = sections.shift[/<(.*)>/, 1]
           options = {}
           sections.each do |section|
             name, val = section.split('=').map(&:strip)
@@ -17,7 +17,7 @@ module HttpLinkHeader
             val.slice!(-1, 1) if val.end_with?('"')
             options[name.to_sym] = val
           end
-          Link.new(uri, options)
+          Link.new(url, options)
         end
 
         new(links)
