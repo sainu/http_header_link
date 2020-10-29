@@ -1,6 +1,7 @@
 require 'bundler/setup'
 require 'http_link_header'
 require 'rspec-parameterized-context'
+require 'pry'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
