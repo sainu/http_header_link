@@ -17,7 +17,7 @@ module HttpLinkHeader
             val.slice!(-1, 1) if val.end_with?('"')
             options[name.to_sym] = val
           end
-          Link.new(url, options)
+          Link.new(url, **options)
         end
 
         new(links)
