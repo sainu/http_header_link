@@ -30,6 +30,15 @@ HttpLinkHeader::LinkHeader.generate(
 => "</?page=3>; rel=\"previous\", </?page=1>; rel=\"next\""
 ```
 
+```rb
+prev_url = get_prev_url
+next_url = get_next_url
+link_header = HttpLinkHeader::LinkHeader.new
+link_header.push(HttpLinkHeader::Link.new(prev_url, rel: 'previous')) if prev_url
+link_header.push(HttpLinkHeader::Link.new(next_url, rel: 'next')) if next_url
+link_header.generate if link_header.present?
+```
+
 ### Parsing Link Header
 
 ```rb
