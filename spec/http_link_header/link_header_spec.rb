@@ -6,11 +6,12 @@ RSpec.describe HttpLinkHeader::LinkHeader do
       subject { described_class.parse(target) }
 
       parameterized do
-        where :target, :expected_value, size: 3 do
+        where :target, :expected_value, :section_count, size: 3 do
           [
             [
               %(</>; rel="next"),
-              [HttpLinkHeader::Link.new('/', rel: 'next')]
+              [HttpLinkHeader::Link.new('/', rel: 'next')],
+              1
             ],
             [
               '</next>; rel="next"; title="next page", ' \
@@ -18,7 +19,8 @@ RSpec.describe HttpLinkHeader::LinkHeader do
               [
                 HttpLinkHeader::Link.new('/next', rel: 'next', title: 'next page'),
                 HttpLinkHeader::Link.new('/prev', rel: 'previous', title: 'previous page')
-              ]
+              ],
+              2
             ],
             [
               '<http://localhost/next>; rel="next"; title="next page"; hreflang="ja"; media="(min-width: 801px)"; type="text/plain", ' \
@@ -26,18 +28,19 @@ RSpec.describe HttpLinkHeader::LinkHeader do
               [
                 HttpLinkHeader::Link.new('http://localhost/next', rel: 'next', title: 'next page', hreflang: 'ja', media: '(min-width: 801px)', type: 'text/plain'),
                 HttpLinkHeader::Link.new('http://localhost/prev', rel: 'previous', title: 'previous page', hreflang: 'ja', media: '(min-width: 801px)', type: 'text/plain')
-              ]
+              ],
+              2
             ]
           ]
         end
 
         with_them do
           it do
-            result = subject
-            expect(result.size).to eq(expected_value.size)
-            result.each_with_index do |r, i|
-              expect(r.url).to eq(expected_value[i].url)
-              expect(r.attributes).to eq(expected_value[i].attributes)
+            link_header = subject
+            expect(link_header.links.size).to eq(expected_value.size)
+            section_count.times do |i|
+              expect(link_header.links[i].url).to eq(expected_value[i].url)
+              expect(link_header.links[i].attributes).to eq(expected_value[i].attributes)
             end
           end
         end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module HttpLinkHeader
-  class LinkHeader < Array
+  class LinkHeader
     class << self
       # @param [String] target
       # @return [HttpLinkHeader::ParseResult]
@@ -29,26 +29,24 @@ module HttpLinkHeader
       end
     end
 
+    # @return [Array<HttpLinkHeader::Link>]
+    attr_reader :links
+
     # @param [Array<HttpLinkHeader::Link>] links
     def initialize(*links)
       _links = links.flatten
-      super(_links.empty? ? [] : _links)
+      @links = _links.empty? ? [] : _links
     end
 
     # @return [String]
     def generate
-      self.flatten.compact.map(&:generate).join(', ')
+      links.flatten.compact.map(&:generate).join(', ')
     end
 
     # @param [Symbol] attribute
     # @param [String] value
     def find_by(attribute, value)
-      self.find { |link| link.public_send(attribute) == value }
+      links.find { |link| link.public_send(attribute) == value }
     end
-
-    private
-
-    # @return [Array<HttpLinkHeader::Link>]
-    attr_reader :links
   end
 end
