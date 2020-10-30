@@ -43,6 +43,32 @@ RSpec.describe HttpLinkHeader::LinkHeader do
         end
       end
     end
+
+    describe '.generate' do
+      subject { described_class.generate(*links) }
+
+      parameterized do
+        where :links, :expected_value, size: 2 do
+          [
+            [
+              HttpLinkHeader::Link.new('/?page=1', rel: 'previous'),
+              '</?page=1>; rel="previous"'
+            ],
+            [
+              [
+                HttpLinkHeader::Link.new('/?page=1', rel: 'previous'),
+                HttpLinkHeader::Link.new('/?page=3', rel: 'next'),
+              ],
+              '</?page=1>; rel="previous", </?page=3>; rel="next"'
+            ]
+          ]
+        end
+
+        with_them do
+          it { is_expected.to eq(expected_value) }
+        end
+      end
+    end
   end
 
   describe 'Instance methods' do
