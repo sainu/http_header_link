@@ -7,7 +7,7 @@ The library handling the Link header, written in Ruby.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'http_link_header'
+gem 'http_link_header', git: 'git@github.com:sainu/http_link_header.git', branch: 'master'
 ```
 
 And then execute:
@@ -16,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install http_link_header
+    $ gem install http_link_header git@github.com:sainu/http_link_header.git master
 
 ## Usage
 
