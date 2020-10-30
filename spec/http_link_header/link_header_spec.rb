@@ -175,6 +175,24 @@ RSpec.describe HttpLinkHeader::LinkHeader do
       end
     end
 
+    describe '#present?' do
+      let(:instance) { described_class.new }
+
+      subject { instance.present? }
+
+      context 'When added link' do
+        before do
+          instance.push(HttpLinkHeader::Link.new('/', rel: 'test'))
+        end
+
+        it { is_expected.to eq(true) }
+      end
+
+      context 'When not added link' do
+        it { is_expected.to eq(false) }
+      end
+    end
+
     describe '#find_by' do
       let(:link_header) do
         described_class.new(

@@ -49,6 +49,11 @@ module HttpLinkHeader
       links << link
     end
 
+    # @return [Boolean]
+    def present?
+      !links.empty?
+    end
+
     # @param [Symbol] attribute
     # @param [String] value
     def find_by(attribute, value)
