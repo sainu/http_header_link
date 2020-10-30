@@ -23,11 +23,10 @@ Or install it yourself as:
 ### Generating Link Header
 
 ```rb
-link_header = HttpLinkHeader::LinkHeader.new(
+HttpLinkHeader::LinkHeader.generate(
   HttpLinkHeader::Link.new("/?page=1", rel: 'previous'),
   HttpLinkHeader::Link.new("/?page=3", rel: 'next')
 )
-link_header.generate
 => "</?page=3>; rel=\"previous\", </?page=1>; rel=\"next\""
 ```
 
