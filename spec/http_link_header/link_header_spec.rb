@@ -153,6 +153,28 @@ RSpec.describe HttpLinkHeader::LinkHeader do
       end
     end
 
+    describe '#push' do
+      let(:instance) { described_class.new }
+
+      subject { instance.push(argument) }
+
+      context 'argument is `HttpLinkHeader::Link` class' do
+        let(:argument) { HttpLinkHeader::Link.new('/', rel: 'test') }
+
+        it 'adds argument to #link' do
+          expect { subject }.to change { instance.links.size }.by(1)
+        end
+      end
+
+      context 'argument is no `HttpLinkHeader::Link` class' do
+        let(:argument) { 'a' }
+
+        it 'raises TypeError' do
+          expect { subject }.to raise_error(TypeError)
+        end
+      end
+    end
+
     describe '#find_by' do
       let(:link_header) do
         described_class.new(

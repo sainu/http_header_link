@@ -43,6 +43,12 @@ module HttpLinkHeader
       links.flatten.compact.map(&:generate).join(', ')
     end
 
+    # @param [HttpHeaderLink::Link]
+    def push(link)
+      raise TypeError, "no implicit conversion of #{link.class.name} into HttpLinkHeader::Link" unless link.is_a?(Link)
+      links << link
+    end
+
     # @param [Symbol] attribute
     # @param [String] value
     def find_by(attribute, value)
