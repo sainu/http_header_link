@@ -1,5 +1,5 @@
 require 'bundler/setup'
-require 'http_link_header'
+require 'http_header_link'
 require 'rspec-parameterized-context'
 require 'pry'
 

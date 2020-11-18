@@ -1,4 +1,4 @@
-# HttpLinkHeader
+# HttpHeaderLink
 
 The library handling the Link header, written in Ruby.
 
@@ -7,7 +7,7 @@ The library handling the Link header, written in Ruby.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'http_link_header', git: 'git@github.com:sainu/http_link_header.git', branch: 'master'
+gem 'http_header_link', git: 'git@github.com:sainu/http_header_link.git', branch: 'master'
 ```
 
 And then execute:
@@ -16,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install http_link_header git@github.com:sainu/http_link_header.git master
+    $ gem install http_header_link git@github.com:sainu/http_header_link.git master
 
 ## Usage
 
@@ -25,7 +25,7 @@ Or install it yourself as:
 #### Basic
 
 ```rb
-link_header = HttpLinkHeader::LinkHeader.new
+link_header = HttpHeaderLink::LinkHeader.new
 link_header.add_link('/?page=1', rel: 'previous')
 link_header.add_link('/?page=3', rel: 'next')
 link_header.generate
@@ -35,7 +35,7 @@ link_header.generate
 #### Configure Base URL
 
 ```rb
-link_header = HttpLinkHeader::LinkHeader.new(base_url: 'http://localhost')
+link_header = HttpHeaderLink::LinkHeader.new(base_url: 'http://localhost')
 link_header.add_link('/?page=1', rel: 'previous')
 link_header.add_link('/?page=3', rel: 'next')
 link_header.generate
@@ -45,7 +45,7 @@ link_header.generate
 ### Parsing Link Header
 
 ```rb
-link_header = HttpLinkHeader::LinkHeader.parse('</?page=2>; rel="next"')
+link_header = HttpHeaderLink::LinkHeader.parse('</?page=2>; rel="next"')
 next_page = link_header.find_by(:rel, 'next')&.get_query(:page)&.to_i
 => 2
 ```
@@ -58,5 +58,5 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/sainuio/http_link_header.
+Bug reports and pull requests are welcome on GitHub at https://github.com/sainuio/http_header_link.
 

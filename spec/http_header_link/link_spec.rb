@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe HttpLinkHeader::Link do
+RSpec.describe HttpHeaderLink::Link do
   describe 'Instance methods' do
     describe '#url' do
       subject { instance.url }

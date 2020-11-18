@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module HttpLinkHeader
+module HttpHeaderLink
   class Link
     # @return [String]
     attr_reader :url

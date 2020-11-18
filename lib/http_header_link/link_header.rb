@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module HttpLinkHeader
+module HttpHeaderLink
   class LinkHeader
     class << self
       # @param [String] target
-      # @return [HttpLinkHeader::ParseResult]
+      # @return [HttpHeaderLink::ParseResult]
       def parse(target)
         parts = target.split(',')
         links = parts.map do |part|
@@ -24,10 +24,10 @@ module HttpLinkHeader
       end
     end
 
-    # @return [Array<HttpLinkHeader::Link>]
+    # @return [Array<HttpHeaderLink::Link>]
     attr_reader :links
 
-    # @param [Array<HttpLinkHeader::Link>] links
+    # @param [Array<HttpHeaderLink::Link>] links
     # @param [Hash] options
     # @option options [String] :base_url
     def initialize(*links, **options)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe HttpLinkHeader::LinkHeader do
+RSpec.describe HttpHeaderLink::LinkHeader do
   describe 'Class methods' do
     describe '.parse' do
       subject { described_class.parse(target) }
@@ -10,15 +10,15 @@ RSpec.describe HttpLinkHeader::LinkHeader do
           [
             [
               %(</>; rel="next"),
-              [HttpLinkHeader::Link.new('/', rel: 'next')],
+              [HttpHeaderLink::Link.new('/', rel: 'next')],
               1
             ],
             [
               '</next>; rel="next"; title="next page", ' \
                 '</prev>; rel="previous"; title="previous page"',
               [
-                HttpLinkHeader::Link.new('/next', rel: 'next', title: 'next page'),
-                HttpLinkHeader::Link.new('/prev', rel: 'previous', title: 'previous page')
+                HttpHeaderLink::Link.new('/next', rel: 'next', title: 'next page'),
+                HttpHeaderLink::Link.new('/prev', rel: 'previous', title: 'previous page')
               ],
               2
             ],
@@ -26,8 +26,8 @@ RSpec.describe HttpLinkHeader::LinkHeader do
               '<http://localhost/next>; rel="next"; title="next page"; hreflang="ja"; media="(min-width: 801px)"; type="text/plain", ' \
                 '<http://localhost/prev>; rel="previous"; title="previous page"; hreflang="ja"; media="(min-width: 801px); type="text/plain"',
               [
-                HttpLinkHeader::Link.new('http://localhost/next', rel: 'next', title: 'next page', hreflang: 'ja', media: '(min-width: 801px)', type: 'text/plain'),
-                HttpLinkHeader::Link.new('http://localhost/prev', rel: 'previous', title: 'previous page', hreflang: 'ja', media: '(min-width: 801px)', type: 'text/plain')
+                HttpHeaderLink::Link.new('http://localhost/next', rel: 'next', title: 'next page', hreflang: 'ja', media: '(min-width: 801px)', type: 'text/plain'),
+                HttpHeaderLink::Link.new('http://localhost/prev', rel: 'previous', title: 'previous page', hreflang: 'ja', media: '(min-width: 801px)', type: 'text/plain')
               ],
               2
             ]
@@ -59,28 +59,28 @@ RSpec.describe HttpLinkHeader::LinkHeader do
           where :args, :expected_value, size: 6 do
             [
               [
-                HttpLinkHeader::Link.new('/', rel: 'next'),
+                HttpHeaderLink::Link.new('/', rel: 'next'),
                 '</>; rel="next"'
               ],
               [
                 [
                   nil,
-                  HttpLinkHeader::Link.new('/', rel: 'next')
+                  HttpHeaderLink::Link.new('/', rel: 'next')
                 ],
                 '</>; rel="next"'
               ],
               [
                 [
-                  HttpLinkHeader::Link.new('/next', rel: 'next'),
-                  HttpLinkHeader::Link.new('/prev', rel: 'previous')
+                  HttpHeaderLink::Link.new('/next', rel: 'next'),
+                  HttpHeaderLink::Link.new('/prev', rel: 'previous')
                 ],
                 '</next>; rel="next", ' \
                   '</prev>; rel="previous"'
               ],
               [
                 [
-                  HttpLinkHeader::Link.new('http://localhost/next', rel: 'next', title: 'next page', hreflang: 'ja', media: '(min-width: 801px)', type: 'text/plain'),
-                  HttpLinkHeader::Link.new('http://localhost/prev', rel: 'previous', title: 'previous page', hreflang: 'ja', media: '(min-width: 801px)', type: 'text/plain')
+                  HttpHeaderLink::Link.new('http://localhost/next', rel: 'next', title: 'next page', hreflang: 'ja', media: '(min-width: 801px)', type: 'text/plain'),
+                  HttpHeaderLink::Link.new('http://localhost/prev', rel: 'previous', title: 'previous page', hreflang: 'ja', media: '(min-width: 801px)', type: 'text/plain')
                 ],
                 '<http://localhost/next>; rel="next"; title="next page"; hreflang="ja"; media="(min-width: 801px)"; type="text/plain", ' \
                   '<http://localhost/prev>; rel="previous"; title="previous page"; hreflang="ja"; media="(min-width: 801px)"; type="text/plain"'
@@ -91,8 +91,8 @@ RSpec.describe HttpLinkHeader::LinkHeader do
               ],
               [
                 [
-                  HttpLinkHeader::Link.new('/next', rel: 'next'),
-                  HttpLinkHeader::Link.new('/prev', rel: 'previous'),
+                  HttpHeaderLink::Link.new('/next', rel: 'next'),
+                  HttpHeaderLink::Link.new('/prev', rel: 'previous'),
                   base_url: 'http://localhost'
                 ],
                 '<http://localhost/next>; rel="next", ' \
@@ -121,8 +121,8 @@ RSpec.describe HttpLinkHeader::LinkHeader do
               ],
               [
                 [
-                  HttpLinkHeader::Link.new('/next', rel: 'next'),
-                  HttpLinkHeader::Link.new('/prev', rel: 'previous')
+                  HttpHeaderLink::Link.new('/next', rel: 'next'),
+                  HttpHeaderLink::Link.new('/prev', rel: 'previous')
                 ],
                 '</next>; rel="next", </prev>; rel="previous"'
               ]
@@ -146,7 +146,7 @@ RSpec.describe HttpLinkHeader::LinkHeader do
 
       it 'add Link instance to links' do
         expect { subject }.to change { instance.present? }.from(false).to(true)
-        expect(instance.links.first).to be_a(HttpLinkHeader::Link)
+        expect(instance.links.first).to be_a(HttpHeaderLink::Link)
       end
     end
 
@@ -172,7 +172,7 @@ RSpec.describe HttpLinkHeader::LinkHeader do
       let(:link_header) do
         described_class.new(
           expected_link,
-          HttpLinkHeader::Link.new('/dummy', rel: 'dummy')
+          HttpHeaderLink::Link.new('/dummy', rel: 'dummy')
         )
       end
 
@@ -181,11 +181,11 @@ RSpec.describe HttpLinkHeader::LinkHeader do
       parameterized do
         where :attribute, :value, :expected_link, size: 5 do
           [
-            [:rel, 'next', HttpLinkHeader::Link.new('/', rel: 'next')],
-            [:hreflang, 'ja', HttpLinkHeader::Link.new('/', hreflang: 'ja')],
-            [:title, 'TITLE', HttpLinkHeader::Link.new('/', title: 'TITLE')],
-            [:media, '(min-width: 801px)', HttpLinkHeader::Link.new('/', media: '(min-width: 801px)')],
-            [:type, 'text/plain', HttpLinkHeader::Link.new('/', type: 'text/plain')],
+            [:rel, 'next', HttpHeaderLink::Link.new('/', rel: 'next')],
+            [:hreflang, 'ja', HttpHeaderLink::Link.new('/', hreflang: 'ja')],
+            [:title, 'TITLE', HttpHeaderLink::Link.new('/', title: 'TITLE')],
+            [:media, '(min-width: 801px)', HttpHeaderLink::Link.new('/', media: '(min-width: 801px)')],
+            [:type, 'text/plain', HttpHeaderLink::Link.new('/', type: 'text/plain')],
           ]
         end
 
