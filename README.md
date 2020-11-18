@@ -23,20 +23,11 @@ Or install it yourself as:
 ### Generating Link Header
 
 ```rb
-HttpLinkHeader::LinkHeader.generate(
-  HttpLinkHeader::Link.new("/?page=1", rel: 'previous'),
-  HttpLinkHeader::Link.new("/?page=3", rel: 'next')
-)
-=> "</?page=3>; rel=\"previous\", </?page=1>; rel=\"next\""
-```
-
-```rb
-prev_url = get_prev_url
-next_url = get_next_url
 link_header = HttpLinkHeader::LinkHeader.new
-link_header.generate if link_header.present?
-link_header.add_link(prev_url, rel: 'previous') if prev_url
-link_header.add_link(next_url, rel: 'next') if next_url
+link_header.add_link('/?page=1', rel: 'previous')
+link_header.add_link('/?page=3', rel: 'next')
+link_header.generate
+=> "</?page=1>; rel=\"previous\", </?page=3>; rel=\"next\""
 ```
 
 ### Parsing Link Header

@@ -22,11 +22,6 @@ module HttpLinkHeader
 
         new(links)
       end
-
-      # @param [Array<HttpLinkHeader::Link>] links
-      def generate(*links)
-        new(*links).generate
-      end
     end
 
     # @return [Array<HttpLinkHeader::Link>]
