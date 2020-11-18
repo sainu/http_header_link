@@ -8,12 +8,12 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{The library handling the Link header, written in Ruby.}
   spec.description   = %q{The library handling the Link header, written in Ruby.}
-  spec.homepage      = "https://github.com/sainuio/http_header_link/"
+  spec.homepage      = "https://github.com/sainu/http_header_link/"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/sainuio/http_header_link/"
-  spec.metadata["changelog_uri"] = "https://github.com/sainuio/http_header_link/blob/master/CHANGELOG.md"
+  spec.metadata["source_code_uri"] = "https://github.com/sainu/http_header_link/"
+  spec.metadata["changelog_uri"] = "https://github.com/sainu/http_header_link/tags"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
