@@ -7,7 +7,12 @@ module HttpLinkHeader
     attr_reader :attributes
 
     # @param [String] url
-    # @param [Hash{ Symbol => String }] options
+    # @param [Hash] options
+    # @option options [String] :rel
+    # @option options [String] :title
+    # @option options [String] :hreflang
+    # @option options [String] :media
+    # @option options [String] :type
     def initialize(url, **options)
       @url = url
       @attributes = options.slice(:rel, :title, :hreflang, :media, :type)
