@@ -2,6 +2,6 @@
 
 RSpec.describe HttpLinkHeader::VERSION do
   it "has a version number" do
-    expect(described_class).not_to be "0.1.0"
+    expect(HttpLinkHeader::VERSION).not_to be_nil
   end
 end
