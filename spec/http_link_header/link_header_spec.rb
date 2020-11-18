@@ -56,7 +56,7 @@ RSpec.describe HttpLinkHeader::LinkHeader do
         let(:instance) { described_class.new(*args) }
 
         parameterized do
-          where :args, :expected_value, size: 5 do
+          where :args, :expected_value, size: 6 do
             [
               [
                 HttpLinkHeader::Link.new('/', rel: 'next'),
@@ -88,6 +88,15 @@ RSpec.describe HttpLinkHeader::LinkHeader do
               [
                 nil,
                 ''
+              ],
+              [
+                [
+                  HttpLinkHeader::Link.new('/next', rel: 'next'),
+                  HttpLinkHeader::Link.new('/prev', rel: 'previous'),
+                  base_url: 'http://localhost'
+                ],
+                '<http://localhost/next>; rel="next", ' \
+                  '<http://localhost/prev>; rel="previous"',
               ]
             ]
           end

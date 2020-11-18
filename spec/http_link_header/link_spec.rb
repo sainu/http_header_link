@@ -14,14 +14,38 @@ RSpec.describe HttpLinkHeader::Link do
     end
 
     describe '#generate' do
-      subject { instance.generate }
+      context 'without options' do
+        subject { instance.generate }
 
-      let(:instance) { described_class.new(*args) }
-      let(:args) do
-        ['/', { rel: 'previous' }]
+        let(:instance) { described_class.new('/', rel: 'previous') }
+
+        it { is_expected.to eq('</>; rel="previous"') }
       end
 
-      it { is_expected.to eq('</>; rel="previous"') }
+      context 'with base_url option' do
+        subject { instance.generate(base_url: base_url) }
+
+        let(:instance) { described_class.new(url, rel: 'previous') }
+
+        parameterized do
+          where :base_url, :url, :expected_url, size: 8 do
+            [
+              ['http://localhost', 'items?page=1', 'http://localhost/items?page=1'],
+              ['http://localhost/', 'items?page=1', 'http://localhost/items?page=1'],
+              ['http://localhost', '/items?page=1', 'http://localhost/items?page=1'],
+              ['http://localhost/', '/items?page=1', 'http://localhost/items?page=1'],
+              ['http://localhost/base', 'items?page=1', 'http://localhost/items?page=1'],
+              ['http://localhost/base/', 'items?page=1', 'http://localhost/base/items?page=1'],
+              ['http://localhost/base', '/items?page=1', 'http://localhost/items?page=1'],
+              ['http://localhost/base/', '/items?page=1', 'http://localhost/items?page=1']
+            ]
+          end
+
+          with_them do
+            it { is_expected.to eq(%(<#{expected_url}>; rel="previous")) }
+          end
+        end
+      end
     end
 
     describe '#get_query' do

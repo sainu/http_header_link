@@ -18,9 +18,11 @@ module HttpLinkHeader
       @attributes = options.slice(:rel, :title, :hreflang, :media, :type)
     end
 
+    # @param [String] base_url
     # @return [String]
-    def generate
-      str = "<#{url}>"
+    def generate(base_url: nil)
+      src = base_url ? URI.join(base_url, url) : url
+      str = "<#{src}>"
       attributes.each do |name, value|
         str += %(; #{name}="#{value}")
       end

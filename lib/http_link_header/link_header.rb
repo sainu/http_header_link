@@ -28,14 +28,17 @@ module HttpLinkHeader
     attr_reader :links
 
     # @param [Array<HttpLinkHeader::Link>] links
-    def initialize(*links)
+    # @param [Hash] options
+    # @option options [String] :base_url
+    def initialize(*links, **options)
       _links = links.flatten
       @links = _links.empty? ? [] : _links
+      @base_url = options.delete(:base_url)
     end
 
     # @return [String]
     def generate
-      links.flatten.compact.map(&:generate).join(', ')
+      links.flatten.compact.map { |l| l.generate(base_url: base_url) }.join(', ')
     end
 
     # @param [String] url
@@ -59,5 +62,9 @@ module HttpLinkHeader
     def find_by(attribute, value)
       links.find { |link| link.public_send(attribute) == value }
     end
+
+    private
+
+    attr_reader :base_url
   end
 end

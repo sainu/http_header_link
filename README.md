@@ -22,12 +22,24 @@ Or install it yourself as:
 
 ### Generating Link Header
 
+#### Basic
+
 ```rb
 link_header = HttpLinkHeader::LinkHeader.new
 link_header.add_link('/?page=1', rel: 'previous')
 link_header.add_link('/?page=3', rel: 'next')
 link_header.generate
 => "</?page=1>; rel=\"previous\", </?page=3>; rel=\"next\""
+```
+
+#### Configure Base URL
+
+```rb
+link_header = HttpLinkHeader::LinkHeader.new(base_url: 'http://localhost')
+link_header.add_link('/?page=1', rel: 'previous')
+link_header.add_link('/?page=3', rel: 'next')
+link_header.generate
+=> "<http://localhost/?page=1>; rel=\"previous\", <http://localhost/?page=3>; rel=\"next\""
 ```
 
 ### Parsing Link Header
