@@ -34,9 +34,9 @@ HttpLinkHeader::LinkHeader.generate(
 prev_url = get_prev_url
 next_url = get_next_url
 link_header = HttpLinkHeader::LinkHeader.new
-link_header.push(HttpLinkHeader::Link.new(prev_url, rel: 'previous')) if prev_url
-link_header.push(HttpLinkHeader::Link.new(next_url, rel: 'next')) if next_url
 link_header.generate if link_header.present?
+link_header.add_link(prev_url, rel: 'previous') if prev_url
+link_header.add_link(next_url, rel: 'next') if next_url
 ```
 
 ### Parsing Link Header

@@ -153,25 +153,17 @@ RSpec.describe HttpLinkHeader::LinkHeader do
       end
     end
 
-    describe '#push' do
+    describe '#add_link' do
       let(:instance) { described_class.new }
 
-      subject { instance.push(argument) }
+      subject { instance.add_link(url, options) }
 
-      context 'argument is `HttpLinkHeader::Link` class' do
-        let(:argument) { HttpLinkHeader::Link.new('/', rel: 'test') }
+      let(:url) { '/?page=2' }
+      let(:options) { { rel: 'next' } }
 
-        it 'adds argument to #link' do
-          expect { subject }.to change { instance.links.size }.by(1)
-        end
-      end
-
-      context 'argument is no `HttpLinkHeader::Link` class' do
-        let(:argument) { 'a' }
-
-        it 'raises TypeError' do
-          expect { subject }.to raise_error(TypeError)
-        end
+      it 'add Link instance to links' do
+        expect { subject }.to change { instance.present? }.from(false).to(true)
+        expect(instance.links.first).to be_a(HttpLinkHeader::Link)
       end
     end
 
@@ -182,7 +174,7 @@ RSpec.describe HttpLinkHeader::LinkHeader do
 
       context 'When added link' do
         before do
-          instance.push(HttpLinkHeader::Link.new('/', rel: 'test'))
+          instance.add_link('/', rel: 'test')
         end
 
         it { is_expected.to eq(true) }
