@@ -5,10 +5,7 @@ RSpec.describe HttpHeaderLink::Link do
     describe '#url' do
       subject { instance.url }
 
-      let(:instance) { described_class.new(*args) }
-      let(:args) do
-        ['/', { rel: 'previous' }]
-      end
+      let(:instance) { described_class.new('/', rel: 'previous') }
 
       it { is_expected.to eq('/') }
     end
@@ -71,10 +68,7 @@ RSpec.describe HttpHeaderLink::Link do
     describe '#rel' do
       subject { instance.rel }
 
-      let(:instance) { described_class.new(*args) }
-      let(:args) do
-        ['/', options]
-      end
+      let(:instance) { described_class.new('/', **options) }
 
       parameterized do
         where :options, :expected_value, size: 2 do
@@ -93,10 +87,7 @@ RSpec.describe HttpHeaderLink::Link do
     describe '#hreflang' do
       subject { instance.hreflang }
 
-      let(:instance) { described_class.new(*args) }
-      let(:args) do
-        ['/', options]
-      end
+      let(:instance) { described_class.new('/', **options) }
 
       parameterized do
         where :options, :expected_value, size: 2 do
@@ -115,10 +106,7 @@ RSpec.describe HttpHeaderLink::Link do
     describe '#title' do
       subject { instance.title }
 
-      let(:instance) { described_class.new(*args) }
-      let(:args) do
-        ['/', options]
-      end
+      let(:instance) { described_class.new('/', **options) }
 
       parameterized do
         where :options, :expected_value, size: 2 do
@@ -137,10 +125,7 @@ RSpec.describe HttpHeaderLink::Link do
     describe '#media' do
       subject { instance.media }
 
-      let(:instance) { described_class.new(*args) }
-      let(:args) do
-        ['/', options]
-      end
+      let(:instance) { described_class.new('/', **options) }
 
       parameterized do
         where :options, :expected_value, size: 2 do
@@ -159,10 +144,7 @@ RSpec.describe HttpHeaderLink::Link do
     describe '#type' do
       subject { instance.type }
 
-      let(:instance) { described_class.new(*args) }
-      let(:args) do
-        ['/', options]
-      end
+      let(:instance) { described_class.new('/', **options) }
 
       parameterized do
         where :options, :expected_value, size: 2 do
