@@ -53,13 +53,14 @@ RSpec.describe HttpHeaderLink::LinkHeader do
       context '引数に渡す時に展開しない時' do
         subject { instance.generate }
 
-        let(:instance) { described_class.new(*args) }
+        let(:instance) { described_class.new(*links, **options) }
 
         parameterized do
-          where :args, :expected_value, size: 6 do
+          where :links, :options, :expected_value, size: 6 do
             [
               [
                 HttpHeaderLink::Link.new('/', rel: 'next'),
+                {},
                 '</>; rel="next"'
               ],
               [
@@ -67,6 +68,7 @@ RSpec.describe HttpHeaderLink::LinkHeader do
                   nil,
                   HttpHeaderLink::Link.new('/', rel: 'next')
                 ],
+                {},
                 '</>; rel="next"'
               ],
               [
@@ -74,6 +76,7 @@ RSpec.describe HttpHeaderLink::LinkHeader do
                   HttpHeaderLink::Link.new('/next', rel: 'next'),
                   HttpHeaderLink::Link.new('/prev', rel: 'previous')
                 ],
+                {},
                 '</next>; rel="next", ' \
                   '</prev>; rel="previous"'
               ],
@@ -82,19 +85,21 @@ RSpec.describe HttpHeaderLink::LinkHeader do
                   HttpHeaderLink::Link.new('http://localhost/next', rel: 'next', title: 'next page', hreflang: 'ja', media: '(min-width: 801px)', type: 'text/plain'),
                   HttpHeaderLink::Link.new('http://localhost/prev', rel: 'previous', title: 'previous page', hreflang: 'ja', media: '(min-width: 801px)', type: 'text/plain')
                 ],
+                {},
                 '<http://localhost/next>; rel="next"; title="next page"; hreflang="ja"; media="(min-width: 801px)"; type="text/plain", ' \
                   '<http://localhost/prev>; rel="previous"; title="previous page"; hreflang="ja"; media="(min-width: 801px)"; type="text/plain"'
               ],
               [
                 nil,
+                {},
                 ''
               ],
               [
                 [
                   HttpHeaderLink::Link.new('/next', rel: 'next'),
                   HttpHeaderLink::Link.new('/prev', rel: 'previous'),
-                  base_url: 'http://localhost'
                 ],
+                { base_url: 'http://localhost' },
                 '<http://localhost/next>; rel="next", ' \
                   '<http://localhost/prev>; rel="previous"',
               ]
@@ -139,7 +144,7 @@ RSpec.describe HttpHeaderLink::LinkHeader do
     describe '#add_link' do
       let(:instance) { described_class.new }
 
-      subject { instance.add_link(url, options) }
+      subject { instance.add_link(url, **options) }
 
       let(:url) { '/?page=2' }
       let(:options) { { rel: 'next' } }

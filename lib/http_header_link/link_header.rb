@@ -49,7 +49,7 @@ module HttpHeaderLink
     # @option options [String] :media
     # @option options [String] :type
     def add_link(url, **options)
-      links << Link.new(url, options)
+      links << Link.new(url, **options)
     end
 
     # @return [Boolean]
